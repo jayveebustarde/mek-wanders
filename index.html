@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Mapa ni mek</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<!-- <script src="https://d3js.org/d3.v3.min.js"></script> -->
+<!-- <script src="https://d3js.org/topojson.v1.min.js"></script> -->
+<script src='https://api.mapbox.com/mapbox.js/v3.3.0/mapbox.js'></script>
+<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/v3.3.0/mapbox.css' rel='stylesheet' />
+<style>
+  body { margin:0; padding:0; }
+  #map { position:absolute; top:0; bottom:0; width:100%; }
+</style>
+</head>
+<body>
+<div id='map'></div>
+<script>
+L.mapbox.accessToken = 'pk.eyJ1IjoiamJ1c3RhcmRlIiwiYSI6ImNrOGNvcGZqdjBscWkzbXQ3bTI5eWt5aWMifQ.dPEtklBwVcGtyp0fR42urw';
+let map = L.mapbox.map('map')
+    .setView([13, 122], 5.5)
+    .setMaxBounds(maxBounds())
+    .zoomIn(0.27)
+    .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/light-v10'));
+    // .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11'));
+let doneProvinces = ['Metropolitan Manila', 'Laguna', 'Batangas',  
+        'Mountain Province', 'Cavite', 'Cebu', 'Iloilo', 'Bataan',
+        'Ilocos Norte', 'Ilocos Sur', 'Guimaras', 'Ifugao', 'Cagayan', 
+        'Negros Occidental', 'Albay', 'Rizal', 'Quezon', 'Bohol',
+        'Benguet', 'Pangasinan', 'Marinduque', 'Aurora'];
+
+let provincesLayer = L.geoJson(null, { 
+    style: function(data){
+        if(doneProvinces.indexOf(data.properties.NAME_1) > -1){
+            return {
+                color: '#f00', 
+                weight: 1
+            };
+        } else{
+            return{
+                color: '#39f',
+                weight: 1
+            };
+        }
+        },
+    filter: function(data){
+        return true;
+    }});
+
+
+var usLayer = omnivore.topojson('philippines-provinces.topojson', null, provincesLayer)
+    .on('click', function(f){
+        console.log(f.layer.feature.properties.NAME_1);
+    })
+    .addTo(map);
+
+function maxBounds(){
+    let southWest = L.latLng(4,116),
+        northEast = L.latLng(22, 127);
+    return L.latLngBounds(southWest, northEast);
+}
+</script>
+</body>
+</html>
