@@ -30,14 +30,7 @@
             style: 'mapbox://styles/mapbox/light-v11',
             center: [122, 13], 
             zoom: 5,
-            maxBounds: bounds
-        });
-
-        map.on('load', () => {
-            map.addSource('usLayer', {
-                'type': 'geojson',
-                'data': 'philippines-provinces.geojson'
-            })
+            // maxBounds: bounds
         });
 
         const doneProvinces = ['Metropolitan Manila', 'Laguna', 'Batangas',  
@@ -48,20 +41,28 @@
             'Misamis Oriental', 'Davao del Norte', 'Camiguin', 'Oriental Mindoro',
             'Lanao del Norte', 'Aklan', 'North Cotabato', 'Zambales'];
 
-        map.addLayer({
-            'id': 'provinces',
-            'type': 'fill',
-            'source': 'usLayer',
-            'paint': {
-                'fill-color': [
-                    'match',
-                    ['get', 'NAME_1'],
-                    doneProvinces,
-                    '#f00',
-                    '#39f'
-                ]
-            }
+        map.on('load', () => {
+            map.addSource('provinces', {
+                'type': 'geojson',
+                'data': 'philippines-provinces.geojson'
+            })
+            map.addLayer({
+                'id': 'provinces',
+                'type': 'fill',
+                'source': 'provinces',
+                'paint': {
+                    'fill-color': [
+                        'match',
+                        ['get', 'NAME_1'],
+                        doneProvinces,
+                        '#f00',
+                        '#39f'
+                    ]
+                }
+            });
         });
+
+
 
     // L.mapbox.accessToken = 'pk.eyJ1IjoiamJ1c3RhcmRlIiwiYSI6ImNsZDIzYjE2czAxcGozd29kbGx1cWlua2kifQ.CXKGQ4gXLUgVqCmPlI0kNw';
     // let map = L.mapbox.map('map')
