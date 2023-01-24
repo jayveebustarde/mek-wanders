@@ -5,9 +5,11 @@
         <title>mek wanders</title>
         <meta charset=utf-8 />
         <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-        <script src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js'></script>
+        <!-- <script src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js'></script>
         <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
-        <link href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' rel='stylesheet' />
+        <link href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' rel='stylesheet' /> -->
+        <link href="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css" rel="stylesheet">
+        <script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
         
         <style>
             body { margin:0; padding:0; }
@@ -17,14 +19,28 @@
     <body>
     <div id='map'></div>
     <script>
-    L.mapbox.accessToken = 'pk.eyJ1IjoiamJ1c3RhcmRlIiwiYSI6ImNsZDIzYjE2czAxcGozd29kbGx1cWlua2kifQ.CXKGQ4gXLUgVqCmPlI0kNw';
-    let map = L.mapbox.map('map')
-        .setView([13, 122], 5.5)
-        .setMaxBounds(maxBounds())
-        .zoomIn(0.27)
-        .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/light-v11'));
-        
-    let doneProvinces = ['Metropolitan Manila', 'Laguna', 'Batangas',  
+        mapboxgl.accessToken = 'pk.eyJ1IjoiamJ1c3RhcmRlIiwiYSI6ImNsZDIzYjE2czAxcGozd29kbGx1cWlua2kifQ.CXKGQ4gXLUgVqCmPlI0kNw';
+
+        const bounds = [
+            [116, 4],
+            [127, 21]
+        ];
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/light-v11',
+            center: [122, 13], 
+            zoom: 5,
+            maxBounds: bounds
+        });
+
+        map.on('load', () => {
+            map.addSource('usLayer', {
+                'type': 'geojson',
+                'data': 'philippines-provinces.geojson'
+            })
+        });
+
+        const doneProvinces = ['Metropolitan Manila', 'Laguna', 'Batangas',  
             'Mountain Province', 'Cavite', 'Cebu', 'Iloilo', 'Bataan',
             'Ilocos Norte', 'Ilocos Sur', 'Guimaras', 'Ifugao', 'Cagayan', 
             'Negros Occidental', 'Albay', 'Rizal', 'Quezon', 'Bohol',
@@ -32,36 +48,66 @@
             'Misamis Oriental', 'Davao del Norte', 'Camiguin', 'Oriental Mindoro',
             'Lanao del Norte', 'Aklan', 'North Cotabato', 'Zambales'];
 
-    let provincesLayer = L.geoJson(null, { 
-        style: function(data){
-            if(doneProvinces.indexOf(data.properties.NAME_1) > -1){
-                return {
-                    color: '#f00', 
-                    weight: 1
-                };
-            } else{
-                return{
-                    color: '#39f',
-                    weight: 1
-                };
+        map.addLayer({
+            'id': 'provinces',
+            'type': 'fill',
+            'source': 'usLayer',
+            'paint': {
+                'fill-color': [
+                    'match',
+                    ['get', 'NAME_1'],
+                    doneProvinces,
+                    '#f00',
+                    '#39f'
+                ]
             }
-            },
-        filter: function(data){
-            return true;
-        }});
+        });
+
+    // L.mapbox.accessToken = 'pk.eyJ1IjoiamJ1c3RhcmRlIiwiYSI6ImNsZDIzYjE2czAxcGozd29kbGx1cWlua2kifQ.CXKGQ4gXLUgVqCmPlI0kNw';
+    // let map = L.mapbox.map('map')
+    //     .setView([13, 122], 5.5)
+    //     .setMaxBounds(maxBounds())
+    //     .zoomIn(0.27)
+    //     .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/light-v11'));
+        
+    // let doneProvinces = ['Metropolitan Manila', 'Laguna', 'Batangas',  
+    //         'Mountain Province', 'Cavite', 'Cebu', 'Iloilo', 'Bataan',
+    //         'Ilocos Norte', 'Ilocos Sur', 'Guimaras', 'Ifugao', 'Cagayan', 
+    //         'Negros Occidental', 'Albay', 'Rizal', 'Quezon', 'Bohol',
+    //         'Benguet', 'Pangasinan', 'Marinduque', 'Aurora', 'La Union',
+    //         'Misamis Oriental', 'Davao del Norte', 'Camiguin', 'Oriental Mindoro',
+    //         'Lanao del Norte', 'Aklan', 'North Cotabato', 'Zambales'];
+
+    // let provincesLayer = L.geoJson(null, { 
+    //     style: function(data){
+    //         if(doneProvinces.indexOf(data.properties.NAME_1) > -1){
+    //             return {
+    //                 color: '#f00', 
+    //                 weight: 1
+    //             };
+    //         } else{
+    //             return{
+    //                 color: '#39f',
+    //                 weight: 1
+    //             };
+    //         }
+    //         },
+    //     filter: function(data){
+    //         return true;
+    //     }});
 
 
-    var usLayer = omnivore.topojson('philippines-provinces.topojson', null, provincesLayer)
-        .on('click', function(f){
-            console.log(f.layer.feature.properties.NAME_1);
-        })
-        .addTo(map);
+    // var usLayer = omnivore.topojson('philippines-provinces.topojson', null, provincesLayer)
+    //     .on('click', function(f){
+    //         console.log(f.layer.feature.properties.NAME_1);
+    //     })
+    //     .addTo(map);
 
-    function maxBounds(){
-        let southWest = L.latLng(4,116),
-            northEast = L.latLng(22, 127);
-        return L.latLngBounds(southWest, northEast);
-    }
+    // function maxBounds(){
+    //     let southWest = L.latLng(4,116),
+    //         northEast = L.latLng(22, 127);
+    //     return L.latLngBounds(southWest, northEast);
+    // }
     </script>
     </body>
 </html>
