@@ -9,7 +9,7 @@
         <script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
         <style>
             body { margin:0; padding:0; }
-            #map { position:absolute; top:0; bottom:0; width:100%; }
+            #map { position:absolute; top:0; bottom:0; width:100%; pointer-events: none;}
         </style>
     </head>
     <body>
@@ -39,7 +39,10 @@
             'Misamis Oriental', 'Davao del Norte', 'Camiguin', 'Oriental Mindoro',
             'Lanao del Norte', 'Aklan', 'North Cotabato', 'Zambales'];
 
-        map.on('load', () => {
+        map.on('load', loadMap)
+            .on('mousemove', onMouseMove);
+
+        function loadMap () {
             map.addSource('provinces', {
                 'type': 'geojson',
                 'data': 'philippines-provinces.geojson'
@@ -62,55 +65,12 @@
             map.on('click', 'provinces', (p) => {
                 console.log(p.features[0].properties.NAME_1);
             })
-        });
+        }
 
-
-
-    // L.mapbox.accessToken = 'pk.eyJ1IjoiamJ1c3RhcmRlIiwiYSI6ImNsZDIzYjE2czAxcGozd29kbGx1cWlua2kifQ.CXKGQ4gXLUgVqCmPlI0kNw';
-    // let map = L.mapbox.map('map')
-    //     .setView([13, 122], 5.5)
-    //     .setMaxBounds(maxBounds())
-    //     .zoomIn(0.27)
-    //     .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/light-v11'));
-        
-    // let doneProvinces = ['Metropolitan Manila', 'Laguna', 'Batangas',  
-    //         'Mountain Province', 'Cavite', 'Cebu', 'Iloilo', 'Bataan',
-    //         'Ilocos Norte', 'Ilocos Sur', 'Guimaras', 'Ifugao', 'Cagayan', 
-    //         'Negros Occidental', 'Albay', 'Rizal', 'Quezon', 'Bohol',
-    //         'Benguet', 'Pangasinan', 'Marinduque', 'Aurora', 'La Union',
-    //         'Misamis Oriental', 'Davao del Norte', 'Camiguin', 'Oriental Mindoro',
-    //         'Lanao del Norte', 'Aklan', 'North Cotabato', 'Zambales'];
-
-    // let provincesLayer = L.geoJson(null, { 
-    //     style: function(data){
-    //         if(doneProvinces.indexOf(data.properties.NAME_1) > -1){
-    //             return {
-    //                 color: '#f00', 
-    //                 weight: 1
-    //             };
-    //         } else{
-    //             return{
-    //                 color: '#39f',
-    //                 weight: 1
-    //             };
-    //         }
-    //         },
-    //     filter: function(data){
-    //         return true;
-    //     }});
-
-
-    // var usLayer = omnivore.topojson('philippines-provinces.topojson', null, provincesLayer)
-    //     .on('click', function(f){
-    //         console.log(f.layer.feature.properties.NAME_1);
-    //     })
-    //     .addTo(map);
-
-    // function maxBounds(){
-    //     let southWest = L.latLng(4,116),
-    //         northEast = L.latLng(22, 127);
-    //     return L.latLngBounds(southWest, northEast);
-    // }
+        function onMouseMove (e) {
+            var features = map.queryRenderedFeatures(e.point, { layers: ['provinces'] });
+            map.getCanvas().style.cursor = features.length ? 'pointer' : '';
+        }
     </script>
     </body>
 </html>
