@@ -56,9 +56,12 @@
                         '#f00',
                         '#39f'
                     ],
-                    'fill-opacity': 0.25
+                    'fill-opacity': 0.3
                 }
             });
+            map.on('click', 'provinces', (p) => {
+                console.log(p.features[0].properties.NAME_1);
+            })
         });
 
 
