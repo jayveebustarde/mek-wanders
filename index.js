@@ -51,4 +51,5 @@ function loadMap () {
         var features = map.queryRenderedFeatures(e.point, { layers: ['provincesLayer'] });
         map.getCanvas().style.cursor = features.length ? 'pointer' : '';
     })
+    map.resize();
 }

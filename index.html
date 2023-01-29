@@ -10,7 +10,66 @@
         <link rel="stylesheet" href="index.css"/>
     </head>
     <body>
-        <div id='map'></div>
+        <div uk-grid uk-height-viewport class="uk-padding-remove">
+            <div class="uk-width-1-2">
+                <div class="uk-flex uk-flex-around uk-margin-medium-top">
+                    <div class="uk-text-center">
+                        <h1 class="uk-heading-small">30</h1>
+                        <span>provinces visited</span>
+                    </div>
+                    <div class="uk-text-center">
+                        <h1 class="uk-heading-small">42,000</h1>
+                        <span>miles traveled</span>
+                    </div>
+                    <div class="uk-text-center">
+                        <h1 class="uk-heading-small">72</h1>
+                        <span>sunsets captured</span>
+                    </div>
+                </div>
+                <hr>
+                <div uk-grid class="uk-child-width-1-4 uk-margin-remove ">
+                    <div class="uk-text-center uk-padding-small uk-child-width-1-1">
+                        <div>
+                            <img class="uk-border-circle province-icon uk-box-shadow-large" src="images/albay/IMG_5482.jpeg" alt="Albay">
+                        </div>
+                        <div>Albay</div>
+                    </div>
+                    <div class="uk-text-center uk-padding-small uk-child-width-1-1">
+                        <div>
+                            <img class="uk-border-circle province-icon" src="images/aurora/IMG_4354.jpeg" alt="Aurora">
+                        </div>
+                        <div>Aurora</div>
+                    </div>
+                    <div class="uk-text-center uk-padding-small uk-child-width-1-1">
+                        <div>
+                            <img class="uk-border-circle province-icon" src="images/bohol/DSC00166(1).JPG" alt="Bohol">
+                        </div>
+                        <div>Bohol</div>
+                    </div>
+                    <div class="uk-text-center uk-padding-small uk-child-width-1-1">
+                        <div>
+                            <img class="uk-border-circle province-icon" src="images/boracay/IMG_7863.jpeg" alt="Boracay">
+                        </div>
+                        <div>Aklan</div>
+                    </div>
+                    <div class="uk-text-center uk-padding-small uk-child-width-1-1">
+                        <div>
+                            <img class="uk-border-circle province-icon" src="images/launion/IMG_9881.jpeg" alt="La union">
+                        </div>
+                        <div>La union</div>
+                    </div>
+                    <div class="uk-text-center uk-padding-small uk-child-width-1-1">
+                        <div>
+                            <img class="uk-border-circle province-icon" src="images/orientalmindoro/IMG_9362.jpeg" alt="Oriental mindoro">
+                        </div>
+                        <div>Oriental Mindoro</div>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-width-1-2 uk-position-relative uk-box-shadow-large uk-padding-remove uk-margin-remove">
+                <div id="map" class="uk-position-absolute uk-width-1-1" uk-height-viewport></div>
+            </div>
+        </div>
     </body>
     <!-- scripts -->
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
