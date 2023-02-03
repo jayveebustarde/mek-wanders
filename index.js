@@ -10,7 +10,8 @@ const map = new mapboxgl.Map({
     center: [122, 13], 
     zoom: 5,
     minZoom: 4,
-    maxZoom: 12
+    maxZoom: 12,
+    interactive: false
     // maxBounds: bounds
 });
 
