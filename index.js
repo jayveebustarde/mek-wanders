@@ -22,7 +22,7 @@ const doneProvinces = ['Metropolitan Manila', 'Laguna', 'Batangas',
     'Benguet', 'Pangasinan', 'Marinduque', 'Aurora', 'La Union',
     'Misamis Oriental', 'Davao del Norte', 'Camiguin', 'Oriental Mindoro',
     'Lanao del Norte', 'Aklan', 'North Cotabato', 'Zambales', 'Catanduanes',
-    'Antique', 'Roxas'];
+    'Antique', 'Capiz'];
 
 map.on('load', loadMap);
 
