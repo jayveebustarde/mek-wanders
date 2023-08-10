@@ -34,7 +34,7 @@ jobs:
     - name: Set Git identity
       run: |
         git config user.email "jayvee.bustarde@gmail.com"
-        git config user.name "Jayvee Bustarde"
+        git config user.name "jayveebustarde"
     
     - name: Deploy to GitHub Pages
       run: npm run deploy
