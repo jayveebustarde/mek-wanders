@@ -16,7 +16,7 @@ const map = new mapboxgl.Map({
 
 (async () => {
     try {
-        const response = await fetch("../assets/data/done-provinces.json");
+        const response = await fetch(`${process.env.PUBLIC_URL}/assets/data/done-provinces.json`);
         const doneProvinces = await response.json();
 
         map.on("load", () => loadMap(doneProvinces));
@@ -29,7 +29,7 @@ const map = new mapboxgl.Map({
 function loadMap (doneProvinces) {
     map.addSource("provincesData", {
         "type": "geojson",
-        "data": "../assets/data/philippines-provinces.geojson"
+        "data": `${process.env.PUBLIC_URL}/assets/data/philippines-provinces.geojson`
     })
     console.log(doneProvinces)
     map.addLayer({

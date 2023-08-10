@@ -13,6 +13,7 @@ module.exports = {
         }),
         new webpack.DefinePlugin({
             'process.env.MAPBOX_ACCESS_TOKEN': JSON.stringify(process.env.MAPBOX_ACCESS_TOKEN),
+            'process.env.PUBLIC_URL': JSON.stringify(process.env.NODE_ENV === 'production' ? '/mek-wanders/' : '/')
         }),
         new Dotenv(),
         new CopyWebpackPlugin({
@@ -23,7 +24,8 @@ module.exports = {
     ],
     output: {
         filename: 'bundle.js',
-        path: __dirname + '/dist'
+        path: __dirname + '/dist',
+        publicPath: process.env.NODE_ENV === 'production' ? '/mek-wanders/' : '/'
     },
     devServer: {
         static: {
