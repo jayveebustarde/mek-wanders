@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack serve",
     "build": "webpack --mode production",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist -r https://x-access-token:${GH_TOKEN}@github.com/jayveebustarde/mek-wanders.git"
   },
   "repository": {
     "type": "git",
