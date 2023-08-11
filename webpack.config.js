@@ -5,6 +5,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 
 const mode = process.env.NODE_ENV || 'development';
+const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
     mode: mode,
@@ -13,11 +14,16 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './src/index.html'
         }),
-        new webpack.DefinePlugin({
-            // 'process.env.MAPBOX_ACCESS_TOKEN': JSON.stringify(process.env.MAPBOX_ACCESS_TOKEN),
-            'process.env.PUBLIC_URL': JSON.stringify(process.env.NODE_ENV === 'production' ? '/mek-wanders/' : '/')
-        }),
-        new Dotenv(),
+        ...(isProduction ? [
+            new webpack.DefinePlugin({
+                'process.env.MAPBOX_ACCESS_TOKEN': JSON.stringify(isProduction ? process.env.MAPBOX_ACCESS_TOKEN : undefined),
+                'process.env.PUBLIC_URL': JSON.stringify(process.env.NODE_ENV === 'production' ? '/mek-wanders/' : '/')
+            })] : [
+            new Dotenv(),
+            new webpack.DefinePlugin({
+                'process.env.PUBLIC_URL': JSON.stringify(process.env.NODE_ENV === 'production' ? '/mek-wanders/' : '/')
+            })]
+        ),
         new CopyWebpackPlugin({
             patterns: [
                 { from: 'assets/data', to: 'assets/data' }
