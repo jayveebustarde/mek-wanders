@@ -4,15 +4,17 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 
+const mode = process.env.NODE_ENV || 'development';
+
 module.exports = {
-    mode: 'development',
+    mode: mode,
     entry: './src/index.js',
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html'
         }),
         new webpack.DefinePlugin({
-            'process.env.MAPBOX_ACCESS_TOKEN': JSON.stringify(process.env.MAPBOX_ACCESS_TOKEN),
+            // 'process.env.MAPBOX_ACCESS_TOKEN': JSON.stringify(process.env.MAPBOX_ACCESS_TOKEN),
             'process.env.PUBLIC_URL': JSON.stringify(process.env.NODE_ENV === 'production' ? '/mek-wanders/' : '/')
         }),
         new Dotenv(),

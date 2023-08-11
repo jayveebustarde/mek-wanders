@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "start": "webpack serve",
-    "build": "webpack --mode production",
+    "build": "NODE_ENV=production webpack --mode production",
     "deploy": "gh-pages -d dist -r https://x-access-token:${GH_TOKEN}@github.com/jayveebustarde/mek-wanders.git"
   },
   "repository": {
