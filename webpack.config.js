@@ -16,7 +16,7 @@ module.exports = {
         }),
         ...(isProduction ? [
             new webpack.DefinePlugin({
-                'process.env.MAPBOX_ACCESS_TOKEN': JSON.stringify(isProduction ? process.env.MAPBOX_ACCESS_TOKEN : undefined),
+                'process.env.MAPBOX_ACCESS_TOKEN': JSON.stringify(process.env.MAPBOX_ACCESS_TOKEN),
                 'process.env.PUBLIC_URL': JSON.stringify(process.env.NODE_ENV === 'production' ? '/mek-wanders/' : '/')
             })] : [
             new Dotenv(),
