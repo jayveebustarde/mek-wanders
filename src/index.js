@@ -39,7 +39,7 @@ function loadMap (doneProvinces) {
         "paint": {
             "fill-color": [
                 "match",
-                ["get", "NAME_1"],
+                ["get", "adm2_en"],
                 doneProvinces,
                 "#f00",
                 "#39f"
@@ -52,7 +52,7 @@ function loadMap (doneProvinces) {
             return;
         }
 
-        var title = e.features[0].properties.NAME_1;
+        var title = e.features[0].properties.adm2_en;
     
         new mapboxgl.Popup()
             .setLngLat(e.lngLat)
