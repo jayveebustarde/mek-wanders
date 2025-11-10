@@ -38,9 +38,8 @@ function loadMap (doneProvinces) {
         "source": "provincesData",
         "paint": {
             "fill-color": [
-                "match",
-                ["get", "adm2_en"],
-                doneProvinces,
+                "case",
+                ["in", ["get", "adm2_en"], ["literal", doneProvinces]],
                 "#f00",
                 "#39f"
             ],
